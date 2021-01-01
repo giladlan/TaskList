@@ -1,5 +1,23 @@
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+
+class TaskApp extends React.Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      data : [],
+      num_of_tasks : 0
+    }
+  }
+
+  addTask(data) {
+    const task = {text: data, id: num_of_tasks};
+    this.state.data.push(task);
+  };
+}
+
 
 function App() {
   return (
