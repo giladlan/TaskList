@@ -15,46 +15,67 @@ class Task extends React.Component {
     super(props);
     this.state = {
       data: props.data,
-      isdone = false
+      isChecked = false
     };
+
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
-    this.isdone != isdone;
+    this.setState({
+      isChecked: !this.state.isChecked
+    });
   };
 
-  render{
+  render(){
     if (isdone){
       return(
-        <>
-          <p 
-          className="task" 
-          onClick={this.handleClick}>
-            {this.state.data}
-            </p>
-        </>
+        <p 
+        className="task" 
+        onClick={this.handleClick}>
+          {this.state.data}
+        </p>
       );
     }
     else{
       return(
-        <>
-          <p 
-          className="task" 
-          onClick={this.handleClick}>
-            <s>
-            {this.state.data}
-            </s>
-          </p>
-        </>
+        <p 
+        className="task" 
+        onClick={this.handleClick}>
+          <s>
+          {this.state.data}
+          </s>
+        </p>
       );
     }
   };
 }
 
+// not needed for this version
+// class FullTask extends React.Component {
+//   constructor(props){
+//     super(props);
+//     this.state = {isChecked: false};
 
+//     this.handleChange = this.handleChange.bind(this);
+//     this.handleSubmit = this.handleSubmit.bind(this);
+//   }
 
-}
+//   handleChange(e){
+//     this.setState({
+//       isChecked: !this.isChecked
+//     });
+//   }
+
+//   render(){
+//     return(
+//       <>
+//         <input type="checkbox" id="task" name="vehicle1" value="Bike" on></input>
+//       </>
+//     );
+//   }
+// }
+
 
 function App() {
   return (
