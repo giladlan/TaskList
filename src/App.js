@@ -2,22 +2,59 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-class TaskApp extends React.Component {
-  constructor(props) {
+function Title() {
+  return (
+    <>
+    <h1 className="Title">Task List</h1>
+    </>
+  );
+}
+
+class Task extends React.Component {
+  constructor(props){
     super(props);
-    
     this.state = {
-      data : [],
-      num_of_tasks : 0
-    }
+      data: props.data,
+      isdone = false
+    };
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  addTask(data) {
-    const task = {text: data, id: num_of_tasks};
-    this.state.data.push(task);
+  handleClick() {
+    this.isdone != isdone;
+  };
+
+  render{
+    if (isdone){
+      return(
+        <>
+          <p 
+          className="task" 
+          onClick={this.handleClick}>
+            {this.state.data}
+            </p>
+        </>
+      );
+    }
+    else{
+      return(
+        <>
+          <p 
+          className="task" 
+          onClick={this.handleClick}>
+            <s>
+            {this.state.data}
+            </s>
+          </p>
+        </>
+      );
+    }
   };
 }
 
+
+
+}
 
 function App() {
   return (
