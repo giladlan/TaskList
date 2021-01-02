@@ -105,7 +105,23 @@ class Form extends React.component{
 class TaskList extends React.Component{
   constructor(props){
     super(props);
-    this.state = 
+    this.state = {
+      tasks : ""
+    }
+  }
+
+  makeTasks = tasks.map((value)=> {
+    <Task data={value} />
+  })
+
+  render(){
+    return(
+      <>
+      <form onSubmit={this.onSubmit}>
+        <input type="text" value={this.state.value} onChange={this.handleChange}/>
+      </form>
+      </>
+    );
   }
 }
 
