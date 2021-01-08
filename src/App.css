@@ -1,7 +1,49 @@
-.task {
-  background-color: rgb(236, 215, 188);
-  border-style: solid;
-  border: rgb(42, 51, 51);
-  width: 200px;
-  height: 40px;
+* {
+  background-color: rgb(209, 238, 238);
+}
+
+.root {
+  outline-style: auto;
+  outline-width: 1px;
+}
+
+.header {
+  display: inline;
+  text-align: center;
+  padding: 0px;
+  margin: 0px;
+}
+
+.tasks-wrapper {
+  display: inline;
+  text-align: center;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* .task {
+  display: inline;
+} */
+
+.delete-btn {
+  display: inline-block;
+  height: 15px;
+  margin: 10px;
+  vertical-align: center;
+}
+
+.input-form {
+  display: inline;
+  text-align: center;
+  outline-width: 0px;
+}
+
+.input-box {
+  outline-width: 0px;
+}
+.add-btn {
+  display: inline-block;
+  height: 15px;
+  margin: 10px;
+  vertical-align: center;
 }

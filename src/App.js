@@ -1,149 +1,132 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import Grid from '@material-ui/core/Grid';
 
-function Title() {
-  return (
-    <>
-    <h1 className="Title">Task List</h1>
-    </>
-  );
-}
+// const useStyles = makeStyles((theme) => {
+//   grid: {
+//     width: '100%'
+//   }
+// })
 
-class Task extends React.Component {
+class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      data: props.data,
-      isChecked = false
+      tasks: ["aaa", "bbb", "ccc", "ddd"]
     };
 
-    this.handleClick = this.handleClick.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleSubmit= this.handleSubmit.bind(this);
   }
 
-  handleClick() {
-    this.setState({
-      isChecked: !this.state.isChecked
-    });
-  };
+  handleDelete(index) {
+    const updatedTasks = this.state.tasks;
+    updatedTasks.splice(index, 1);
+    this.setState({tasks: updatedTasks});
+  }
+
+  handleSubmit(task) {
+    this.setState({tasks: [...this.state.tasks, task]})
+  }
 
   render(){
-    if (this.state.isChecked){
-      return(
-        <p 
-        className="task" 
-        onClick={this.handleClick}>
-          {this.state.data}
-        </p>
-      );
-    }
-    else{
-      return(
-        <p 
-        className="task" 
-        onClick={this.handleClick}>
-          <s>
-          {this.state.data}
-          </s>
-        </p>
-      );
-    }
-  };
+    
+    return(
+      <Grid 
+        container 
+        direction="column"
+        justify="space-between"
+        alignItems="center"
+        className={{width:'100px', margin: '0px'}}>
+          <Grid item sx={12}>
+            <Header numOfTasks={this.state.tasks.length}/>
+          </Grid>
+          <Grid item sx={12}>
+          <TaskLisk tasks={this.state.tasks} onDelete={this.handleDelete}/>
+          </Grid>
+          <Grid item sx={12}>
+          <SubmitForm onSubmit={this.handleSubmit}/>
+          </Grid>
+      </Grid>
+    );
+  }
 }
 
-// not needed for this version
-// class FullTask extends React.Component {
-//   constructor(props){
-//     super(props);
-//     this.state = {isChecked: false};
+/*
+  Recieves: number of tasks
+  Returns: a header jsx built of header, number of tasks 
+*/
+function Header(props) {
+  return(
+    <div className="header">
+      <p>
+        <h1>ToDo list</h1>
+        {props.numOfTasks} Tasks left
+      </p>
+    </div>
+  );
+}
 
-//     this.handleChange = this.handleChange.bind(this);
-//     this.handleSubmit = this.handleSubmit.bind(this);
-//   }
+/**/ 
+function TaskLisk(props){
+  const listOfTasks = props.tasks.map((data, index) => {
+    return( 
+      <Task 
+        content={data} 
+        key={index} 
+        id={index}
+        onDelete={props.onDelete}/>
+      );
+  });
 
-//   handleChange(e){
-//     this.setState({
-//       isChecked: !this.isChecked
-//     });
-//   }
+  return(
+    <div className="tasks-wrapper">
+      {listOfTasks}
+    </div>
+  );
+}
 
-//   render(){
-//     return(
-//       <>
-//         <input type="checkbox" id="task" name="vehicle1" value="Bike" on></input>
-//       </>
-//     );
-//   }
-// }
+function Task(props){
+  return(
+    <div className="task">
+      {props.content}
+      <button 
+        className="delete-btn"
+        onClick={()=>{props.onDelete(props.id)}}/>
+    </div>
+  );
+}
 
-class Form extends React.component{
+class SubmitForm extends Component{
   constructor(props){
     super(props);
-    this.state = {value: ''};
-    
-    this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      data: ""
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(event){
-    this.setState({value: event.target.value});
-  }
-
-  handleSubmit(event){
-    event.preventDefault();
+  handleSubmit(e){
+    e.preventDefault();
+    if (this.state.data === ' ') return;
+    this.props.onSubmit(this.state.data);
+    this.setState({data: " "})
   }
 
   render(){
     return(
-      <form onSubmit={this.onSubmit}>
-        <input type="text" value={this.state.value} onChange={this.handleChange}/>
+      <form onSubmit={this.handleSubmit} className="input-form">
+        <input
+          type="text"
+          className="input-box"
+          placeholder="Enter new item"
+          value={this.state.data}
+          onChange={(e)=> this.setState({data: e.target.value})}
+        />
+        <button className="add-btn"/>
       </form>
     );
   }
-}
-
-class TaskList extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      tasks : ""
-    }
-  }
-
-  makeTasks = tasks.map((value)=> {
-    <Task data={value} />
-  })
-
-  render(){
-    return(
-      <>
-      <form onSubmit={this.onSubmit}>
-        <input type="text" value={this.state.value} onChange={this.handleChange}/>
-      </form>
-      </>
-    );
-  }
-}
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
 }
 
 export default App;
